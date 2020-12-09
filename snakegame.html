@@ -7,16 +7,28 @@
   </head>
 
   <body>
-
+    <div style="text-align: center;">
+        <h1 id="title"><em>Welcome to Snake!</em></h1>
+        <button id="newGame">New Game</button>
+    </div>
     <canvas id="snakeboard" width="400" height="400"></canvas>
 
     <style>
-      #snakeboard {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-      }
+        body {
+            background-color: #62a7b2
+        }
+        #snakeboard {
+            position: absolute;
+            top: 55%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        #newGame {
+            margin-top: 10px;
+            border-radius: 10%;
+            font-size: large;
+        }
+      
     </style>
   </body>
 
@@ -45,9 +57,18 @@
     const snakeboard_ctx = snakeboard.getContext("2d");
     // Start game
     main();
+
+    document.addEventListener("keydown", changeDirection)
     
     // main function called repeatedly to keep the game running
     function main() {
+
+        if (hasGameEnded()){
+            //alert("You Lose");
+            return;
+        }
+
+        changingDirection = false;
         setTimeout(function onTick() {
             clearCanvas();
             moveSnake();
@@ -89,7 +110,9 @@
 
     function hasGameEnded(){
         for(let i = 4; i < snake.length; i ++){
-            if(snake[i].x === snake[0].x && snake[i].y === snake[0].y) return true 
+            if(snake[i].x === snake[0].x && snake[i].y === snake[0].y){ 
+                return true
+            } 
         }
 
         const hitLeftWall = snake[0].x < 0;
